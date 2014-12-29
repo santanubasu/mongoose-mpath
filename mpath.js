@@ -2,19 +2,6 @@ var mongoose = require("mongoose");
 var q = require("q");
 var _ = require("underscore");
 
-// Return a a view of this object that can be indexed in elastic search
-var toIndexForm = module.exports.toIndexForm = function(doc) {
-    return {
-        mpath:doc.mpath
-    };
-}
-// Return a a view of this object that can be used in a REST response
-var toResponseForm = module.exports.toResponseForm = function(doc) {
-    return _.pick(doc, "parentId");
-}
-
-
-
 // Enable mpath structures on any `schema`.
 var enable = module.exports.enable = function(schema) {
     schema.plugin(function() {
