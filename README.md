@@ -1,0 +1,1 @@
+Pluggable materialized path library for NodeJS apps using Mongoose
