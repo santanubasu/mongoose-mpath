@@ -1,10 +1,7 @@
 var q = require("q");
 var mongoose = require("mongoose");
-var mockgoose = require("mockgoose");
 var _ = require("underscore");
 var mpath = require("../mpath.js");
-
-mockgoose(mongoose);
 
 var nodeSchema = mongoose.Schema({
     name:String
@@ -18,10 +15,8 @@ describe("For mpath module,", function() {
     before(function() {
         mongoose.connect("mongodb://localhost/testmpath");
     });
-    beforeEach(function() {
-        mongoose.connection.db.dropDatabase();
-    });
     after(function() {
+        mongoose.connection.db.dropDatabase();
         mongoose.connection.close();
     })
     describe("tests attachment,", function() {
