@@ -15,7 +15,7 @@ var enable = module.exports.enable = function(schema) {
                 index:true
             }
         });
-    })
+    });
 }
 
 // Attach `child` to `parent`.  Passing true in `isLeaf` improves performance for leaf nodes because no check needs
@@ -76,7 +76,8 @@ var copy = module.exports.copy = function(root, options) {
     // Convert the `node` to a deep POJO representing this tree.  This function is called recursively to process the
     // entire tree rooted at `node`
     function toDeepObject(node) {
-        var copy = options.copy(node);
+        var copy = new node.constructor(node.toObject());
+        copy._id = new mongoose.Types.ObjectId();
         var object = copy.toObject();
         object.children = {};
         for (var id in node.children) {
