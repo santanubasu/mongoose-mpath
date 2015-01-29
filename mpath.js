@@ -73,11 +73,10 @@ var detach = module.exports.detach = function(child) {
 // node, it is just the root of the tree of nodes that should be copied.
 var copy = module.exports.copy = function(root, options) {
     var objects = [];
-    // Convert the `node` to a deep POJO representing, but assign each object in this hierarchy a newly generated UUID.
-    // This function is called recursively to process the entire tree rooted at `node`
+    // Convert the `node` to a deep POJO representing this tree.  This function is called recursively to process the
+    // entire tree rooted at `node`
     function toDeepObject(node) {
         var copy = options.copy(node);
-        copy._id = new mongoose.Types.ObjectId();
         var object = copy.toObject();
         object.children = {};
         for (var id in node.children) {
