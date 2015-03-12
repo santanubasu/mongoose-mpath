@@ -140,30 +140,33 @@ var copy = module.exports.copy = function(root, options) {
 }
 
 // Find all descendants of `root`.  This does not return a tree structure, just the nodes that would comprise such a tree
-var getDescendants = module.exports.getDescendants = function(root) {
+var getDescendants = module.exports.getDescendants = function(root, options) {
+    options = options?options:{};
+    var query = options.query?options.query:{};
+    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
     return root.constructor
-        .find({
-            mpath:new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id)
-        })
+        .find(query)
         .exec();
 }
 
 // Delete all descendants of `root`
-var removeDescendants = module.exports.removeDescendants = function(root) {
+var removeDescendants = module.exports.removeDescendants = function(root, options) {
+    options = options?options:{};
+    var query = options.query?options.query:{};
+    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
     return root.constructor
-        .find({
-            mpath:new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id)
-        })
+        .find(query)
         .remove()
         .exec();
 }
 
 // Get all children of `root`
-var getChildren = module.exports.getChildren = function(root) {
+var getChildren = module.exports.getChildren = function(root, options) {
+    options = options?options:{};
+    var query = options.query?options.query:{};
+    query.parentId = root.id;
     return root.constructor
-        .find({
-            parentId:root.id
-        })
+        .find(query)
         .exec();
 }
 
