@@ -76,8 +76,14 @@ var copy = module.exports.copy = function(root, options) {
     // Convert the `node` to a deep POJO representing this tree.  This function is called recursively to process the
     // entire tree rooted at `node`
     function toDeepObject(node) {
-        var copy = new node.constructor(node.toObject());
-        copy._id = new mongoose.Types.ObjectId();
+        var copy;
+        if (options.copy) {
+            copy = options.copy(node);
+        }
+        else {
+            copy = new node.constructor(node.toObject());
+            copy._id = new mongoose.Types.ObjectId();
+        }
         var object = copy.toObject();
         object.children = {};
         for (var id in node.children) {
