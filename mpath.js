@@ -151,7 +151,7 @@ var getDescendants = module.exports.getDescendants = function(root, options) {
     var query = options.query?options.query:{};
     query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
     return root.constructor
-        .find(query)
+        .find(query, options.fields?options.fields:"")
         .exec();
 }
 
@@ -172,7 +172,7 @@ var getChildren = module.exports.getChildren = function(root, options) {
     var query = options.query?options.query:{};
     query.parentId = root.id;
     return root.constructor
-        .find(query)
+        .find(query, options.fields?options.fields:"")
         .exec();
 }
 
