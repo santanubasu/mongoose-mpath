@@ -200,8 +200,8 @@ var buildTrees = module.exports.buildTree = function(nodes) {
 }
 
 // Get all descendants of `root` structured as a tree
-var buildDescendantTree = module.exports.buildDescendantTree = function(root) {
-    return getDescendants(root)
+var buildDescendantTree = module.exports.buildDescendantTree = function(root, options) {
+    return getDescendants(root, options)
         .then(function(documents) {
             documents.push(root);
             buildTrees(documents);
@@ -210,8 +210,8 @@ var buildDescendantTree = module.exports.buildDescendantTree = function(root) {
 }
 
 // Get all children of `root` structured as a tree
-var buildChildrenTree = module.exports.buildChildrenTree = function(root) {
-    return getChildren(root)
+var buildChildrenTree = module.exports.buildChildrenTree = function(root, options) {
+    return getChildren(root, options)
         .then(function(documents) {
             documents.push(root);
             buildTrees(documents);
