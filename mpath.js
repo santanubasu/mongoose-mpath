@@ -72,7 +72,6 @@ var detach = module.exports.detach = function(child) {
 // Make a copy of `root`, assigning the copy to the same parent.  Note that `root` does not actually need to be a root
 // node, it is just the root of the tree of nodes that should be copied.
 var copy = module.exports.copy = function(root, options) {
-    options = options?options:{};
     var objects = [];
     // Convert the `node` to a deep POJO representing this tree.  This function is called recursively to process the
     // entire tree rooted at `node`
@@ -212,7 +211,6 @@ var buildTrees = module.exports.buildTree = function(nodes) {
 
 // Get all descendants of `root` structured as a tree
 var buildDescendantTree = module.exports.buildDescendantTree = function(root, options) {
-    options = options?options:{};
     return getDescendants(root, options)
         .then(function(documents) {
             documents.push(root);
@@ -223,7 +221,6 @@ var buildDescendantTree = module.exports.buildDescendantTree = function(root, op
 
 // Get all children of `root` structured as a tree
 var buildChildrenTree = module.exports.buildChildrenTree = function(root, options) {
-    options = options?options:{};
     return getChildren(root, options)
         .then(function(documents) {
             documents.push(root);
@@ -238,7 +235,6 @@ var buildChildrenTree = module.exports.buildChildrenTree = function(root, option
 // have children, or descendants, integrate these into the overall ancestor tree, but do not include any children of
 // any of the ancestors of the `documents`
 var buildAncestorTree = module.exports.buildAncestorTree = function(documents, options) {
-    options = options?options:{};
     var idSet = {};
     var descendants = [];
     if (!documents) {
