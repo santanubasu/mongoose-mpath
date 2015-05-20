@@ -1,3 +1,4 @@
+var mongo = require("mongodb");
 var mongoose = require("mongoose");
 var q = require("q");
 var _ = require("underscore");
@@ -269,14 +270,27 @@ var buildAncestorTree = module.exports.buildAncestorTree = function(documents, o
     delete idSet[""];
 
     var model = options.lean?options.model:documents[0].constructor;
-    var op = model
-        .find({
-            _id:{
-                $in:_.keys(idSet)
-            }
-        })
+    var op;
     if (options.lean) {
-        op = op.lean();
+        op = model
+            .find({
+                _id:{
+                    $in:_
+                        .keys(idSet)
+                        .map(function(id) {
+                            return new mongo.ObjectID(id);
+                        })
+                }
+            })
+            .lean();
+    }
+    else {
+        op = model
+            .find({
+                _id:{
+                    $in:_.keys(idSet)
+                }
+            })
     }
     return op
         .exec()

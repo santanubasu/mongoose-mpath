@@ -5,7 +5,7 @@
     "main": "./mpath",
     "dependencies": {
         "mongodb": "1.3.x",
-        "mongoose": "3.6.x",
+        "mongodb": "2.0.x",
         "q":"0.9.6",
         "underscore":"1.5.1",
         "node-polyfill":"git+https://github.com/santanubasu/node-polyfill"
