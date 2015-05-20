@@ -231,7 +231,7 @@ var buildChildrenTree = module.exports.buildChildrenTree = function(root, option
 // hierarchy (where all paths lead to the same root), this method will always return one tree.  If any of the `documents`
 // have children, or descendants, integrate these into the overall ancestor tree, but do not include any children of
 // any of the ancestors of the `documents`
-var buildAncestorTree = module.exports.buildAncestorTree = function(documents) {
+var buildAncestorTree = module.exports.buildAncestorTree = function(documents, options) {
     var idSet = {};
     var descendants = [];
     if (!documents) {
