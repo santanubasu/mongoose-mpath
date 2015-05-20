@@ -150,8 +150,7 @@ var getDescendants = module.exports.getDescendants = function(root, options) {
     options = options?options:{};
     var query = options.query?options.query:{};
     query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
-    var model = root.constructor?root.constructor:options.model;
-    var op = model.find(query, options.fields?options.fields:"");
+    var op = root.constructor.find(query, options.fields?options.fields:"");
     if (options.lean) {
         op = op.lean();
     }
@@ -163,8 +162,7 @@ var removeDescendants = module.exports.removeDescendants = function(root, option
     options = options?options:{};
     var query = options.query?options.query:{};
     query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
-    var model = root.constructor?root.constructor:options.model;
-    var op = model
+    var op = root.constructor
         .find(query)
         .remove();
     if (options.lean) {
@@ -178,8 +176,7 @@ var getChildren = module.exports.getChildren = function(root, options) {
     options = options?options:{};
     var query = options.query?options.query:{};
     query.parentId = root.id;
-    var model = root.constructor?root.constructor:options.model;
-    var op = model.find(query, options.fields?options.fields:"");
+    var op = root.constructor.find(query, options.fields?options.fields:"");
     if (options.lean) {
         op = op.lean();
     }
@@ -264,8 +261,7 @@ var buildAncestorTree = module.exports.buildAncestorTree = function(documents, o
     })
     delete idSet[""];
 
-    var model = documents[0].constructor?documents[0].constructor:options.model;
-    var op = model
+    var op = documents[0].constructor
         .find({
             _id:{
                 $in:_.keys(idSet)
