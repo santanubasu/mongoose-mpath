@@ -151,7 +151,7 @@ var copy = module.exports.copy = function(root, options) {
 var getDescendants = module.exports.getDescendants = function(root, options) {
     options = options?options:{};
     var query = options.query?options.query:{};
-    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
+    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+(root.id?root.id:root._id.toString()));
     var model = options.lean?options.model:root.constructor;
     var op = model.find(query, options.fields?options.fields:"");
     if (options.lean) {
@@ -164,7 +164,7 @@ var getDescendants = module.exports.getDescendants = function(root, options) {
 var removeDescendants = module.exports.removeDescendants = function(root, options) {
     options = options?options:{};
     var query = options.query?options.query:{};
-    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+root.id);
+    query.mpath = new RegExp("^"+(root.mpath?root.mpath:"")+"\/"+(root.id?root.id:root._id.toString()));
     var model = options.lean?options.model:root.constructor;
     var op = model
         .find(query)
@@ -193,19 +193,19 @@ var getChildren = module.exports.getChildren = function(root, options) {
 var buildTrees = module.exports.buildTree = function(nodes) {
     var nodeMap = {};
     nodes.forEach(function(node) {
-        nodeMap[node.id] = node;
+        nodeMap[node.id?node.id:node._id.toString()] = node;
         node.children = {};
     });
     nodes.forEach(function(node) {
         var parent = nodeMap[node.parentId];
         if (parent) {
-            parent.children[node.id] = node;
+            parent.children[node.id?node.id:node._id.toString()] = node;
             node.parent = parent;
         }
     });
     nodes.forEach(function(node) {
         if (node.parent) {
-            delete nodeMap[node.id];
+            delete nodeMap[node.id?node.id:node._id.toString()];
         }
     });
     return _.values(nodeMap);
